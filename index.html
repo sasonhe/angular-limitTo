@@ -1,0 +1,267 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+ <script type="text/javascript" src="angular.min.js"></script>
+  <style type="text/css">
+  	.container{width:1000px; margin:0 auto;}
+    table{border-spacing:0;border-collapse:collapse}
+    table tr th {text-align: left; padding-bottom: 20px;}
+    table tr td {border-top: 1px solid #ddd; padding: 10px 0;}
+    .pagination-nav {
+      text-align: right;
+    }
+    .pagination-nav .page-nav {
+      border: 1px solid #eeeeee;
+      border-radius: 10px;
+      margin-left: 6px;
+    }
+    .pagination-nav .page-nav .pre-page {
+      width: 0; height: 0;
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 15px;
+      margin-right: 13px;
+      border-right: 12px solid #686868;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+    }
+    .pagination-nav .page-nav .nav-separator {
+      border-right: 1px solid #eeeeee;
+    }
+    .pagination-nav .page-nav .next-page {
+      width: 0; height: 0;
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 20px;
+      margin-right: 12px;
+      border-left: 12px solid #686868;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+    }
+    .pagination-nav .page-nav .disabled {
+      cursor: inherit;
+      border-left-color: #e6e6e6;
+      border-right-color: #e6e6e6;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+    <h1 class="course-title">limitTo分页效果</h1>
+
+    <table width="100%" ng-app="myApp" ng-controller="myCtrl">
+      <tr>
+        <th>姓名</th>
+        <th width="50%">就业企业</th>
+      </tr>
+      <tr ng-repeat="stu in tab | pageStart:pageSize*curPage | limitTo:pageSize">
+        <td>{{stu.name}}</td>
+        <td>{{stu.area}}</td>
+      </tr>
+      <tr height="66">
+        <td align="right">
+          <button ng-disabled="curPage==0" ng-click="curPage=0">首页</button>
+          <button ng-disabled="curPage==0" ng-click="curPage=curPage-1">上一页</button>
+          当前第<span ng-bind="curPage+1"></span>页
+          <button ng-click="curPage=curPage+1" ng-disabled="curPage==pageCont">下一页</button>
+          <button ng-click="curPage=pageCont" ng-disabled="curPage==pageCont">尾页</button>
+        </td>
+        <td>
+          <div class="pagination-nav">
+            <span ng-bind="curPage+1">1</span>
+            <span class="page-separator">/</span>
+            <span ng-bind="pageCont+1"></span>
+            <span class="page-nav">
+              <span class="pre-page" ng-click="curPage=curPage-1" ng-show="curPage>0"></span>
+              <span class="pre-page disabled" ng-show="curPage==0"></span>
+              <span class="nav-separator"></span>
+              <span class="next-page" ng-click="curPage=curPage+1" ng-show="curPage<pageCont"></span>
+              <span class="next-page disabled" ng-show="curPage==curCont"></span>
+            </span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">提示：分页不仅支持以上两组控件，还支持键盘左右键(← →)分页+数字(0~9)分页。</td>
+      </tr>
+    </table>
+<script>
+var app = angular.module("myApp",[]);
+app.controller("myCtrl",function($scope,$document){
+	$scope.tab = [
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"雷*升",area:"北京**不准时科技发展有限公司"},
+		{name:"陈*帅",area:"广州**阿里爹爹科技发展有限公司"},
+		{name:"张*三",area:"上海**腾达达科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"},
+		{name:"懂*长",area:"深圳**低俗文化科技发展有限公司"}
+		
+	];
+	$scope.pageSize = 10;
+	$scope.curPage = 0;
+	$scope.pageCont = Math.ceil($scope.tab.length/$scope.pageSize)-1;
+	$document.bind("keydown",function(e){
+		var keyCode = e.which;
+		var curPage = $scope.curPage;
+		if(keyCode==37 && curPage>0){
+			$scope.curPage--;
+		}else if(keyCode==39 && curPage<$scope.pageCont){
+			$scope.curPage++;
+		}else if(keyCode==48){
+			$scope.curPage = 0;
+		}else if(keyCode>48 && keyCode<58){
+			$scope.curPage = keyCode - 49;
+		}
+		$scope.$apply();
+	})
+});
+app.filter("pageStart",function(){
+	return function(e,start){
+		return e.slice(start);
+	}
+});
+</script>
+</div>
+</body>
+</html>
